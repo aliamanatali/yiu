@@ -39,7 +39,6 @@ import {
   deleteMessage,
   rateMessage,
   canSendMessage,
-  getUsageToday,
   getMessageLimit,
   incrementUsage,
 } from "@/lib/storage";
@@ -83,7 +82,6 @@ export function ChatWindow({ conversationId, onRefresh }: ChatWindowProps) {
     if (!inputValue.trim() || !conversationId) return;
 
     if (!canSendMessage()) {
-      const usage = getUsageToday();
       const limit = getMessageLimit();
       toast.error(
         `You've reached your daily limit of ${limit} messages. Upgrade to Pro for more!`
@@ -137,7 +135,7 @@ export function ChatWindow({ conversationId, onRefresh }: ChatWindowProps) {
       setIsTyping(true);
       setTimeout(() => {
         const aiResponse = generateAIResponse(userMessage.content);
-        const newAiMessage = createMessage(conversationId, "ai", aiResponse);
+        createMessage(conversationId, "ai", aiResponse);
         const loadedMessages = getMessages(conversationId);
         setMessages(loadedMessages);
         setIsTyping(false);
@@ -153,11 +151,6 @@ export function ChatWindow({ conversationId, onRefresh }: ChatWindowProps) {
     toast.success(`Feedback recorded: ${rating === "up" ? "👍" : "👎"}`);
   };
 
-  const handleDeleteConfirm = (messageId: string) => {
-    setMessageToDelete(messageId);
-    setDeleteDialogOpen(true);
-  };
-
   const confirmDelete = () => {
     if (messageToDelete && conversationId) {
       deleteMessage(messageToDelete);
@@ -170,7 +163,7 @@ export function ChatWindow({ conversationId, onRefresh }: ChatWindowProps) {
     setMessageToDelete(null);
   };
 
-  const handleExport = (format: string) => {
+  const handleExport = () => {
     if (!conversationId) return;
     const conversation = getConversation(conversationId);
     if (!conversation) return;
@@ -268,7 +261,7 @@ export function ChatWindow({ conversationId, onRefresh }: ChatWindowProps) {
       {/* Messages */}
       <ScrollArea className="flex-1 p-6" ref={scrollAreaRef}>
         <div className="max-w-3xl mx-auto space-y-6">
-          {messages.map((message, index) => (
+          {messages.map((message) => (
             <div
               key={message.id}
               className={`flex gap-4 ${
@@ -462,3 +455,6 @@ function generateAIResponse(userMessage: string): string {
 
   return `I understand you're asking about "${userMessage}". While this is a demo with simulated responses, in the full version I'll be powered by OpenAI's GPT API and able to provide detailed, helpful responses to any question!\n\nFor now, try asking about:\n• Writing blog posts\n• Coding help\n• Or just say hello!\n\nThe real AI integration is coming in the next development phase.`;
 }
+
+
+

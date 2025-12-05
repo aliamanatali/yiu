@@ -21,6 +21,7 @@ export function ChatInterface() {
     if (conversations.length > 0 && !activeConversationId) {
       setActiveConversationId(conversations[0].id);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleRefresh = () => {
@@ -68,3 +69,4 @@ export function ChatInterface() {
     </div>
   );
 }
+

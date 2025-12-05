@@ -12,9 +12,9 @@ export function getConversations(): Conversation[] {
   if (typeof window === "undefined") return [];
   const data = localStorage.getItem(STORAGE_KEYS.CONVERSATIONS);
   if (!data) return [];
-  const conversations = JSON.parse(data);
+  const conversations = JSON.parse(data) as Conversation[];
   // Convert date strings back to Date objects
-  return conversations.map((conv: any) => ({
+  return conversations.map((conv) => ({
     ...conv,
     createdAt: new Date(conv.createdAt),
     updatedAt: new Date(conv.updatedAt),
@@ -67,7 +67,6 @@ export function deleteConversation(id: string): void {
   localStorage.setItem(STORAGE_KEYS.CONVERSATIONS, JSON.stringify(filtered));
   
   // Also delete all messages in this conversation
-  const messages = getMessages(id);
   const allMessages = getAllMessages();
   const remainingMessages = allMessages.filter(
     (msg) => msg.conversationId !== id
@@ -88,8 +87,8 @@ function getAllMessages(): Message[] {
   if (typeof window === "undefined") return [];
   const data = localStorage.getItem(STORAGE_KEYS.MESSAGES);
   if (!data) return [];
-  const messages = JSON.parse(data);
-  return messages.map((msg: any) => ({
+  const messages = JSON.parse(data) as Message[];
+  return messages.map((msg) => ({
     ...msg,
     timestamp: new Date(msg.timestamp),
   }));
@@ -339,3 +338,4 @@ export function initializeDemoData(): void {
     updateConversation(conv.id, { isPinned: true });
   }
 }
+

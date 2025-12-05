@@ -81,6 +81,7 @@ export function ConversationSidebar({
 
   useEffect(() => {
     loadConversations();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   const handleNewChat = () => {
@@ -402,3 +403,4 @@ function getTimeAgo(date: Date): string {
   if (seconds < 604800) return `${Math.floor(seconds / 86400)} days ago`;
   return date.toLocaleDateString();
 }
+
