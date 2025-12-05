@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ConversationSidebar } from "./conversation-sidebar";
 import { ChatWindow } from "./chat-window";
 import { Button } from "./ui/button";
-import { Menu, PanelLeftClose } from "lucide-react";
+import { Menu } from "lucide-react";
 
 export function ChatInterface() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -45,3 +45,4 @@ export function ChatInterface() {
     </div>
   );
 }
+

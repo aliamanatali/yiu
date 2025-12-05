@@ -194,8 +194,8 @@ export function PricingPlans() {
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600">
-                  On the Free plan, you'll need to wait until the next day when your limit resets. 
-                  Or you can upgrade to Pro or Plus for higher limits. We'll send you notifications when you're 
+                  On the Free plan, you&apos;ll need to wait until the next day when your limit resets. 
+                  Or you can upgrade to Pro or Plus for higher limits. We&apos;ll send you notifications when you&apos;re 
                   approaching your limit.
                 </p>
               </CardContent>
@@ -207,8 +207,8 @@ export function PricingPlans() {
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600">
-                  Yes! We offer a 14-day money-back guarantee on all paid plans. If you're not satisfied, 
-                  we'll refund your payment in full, no questions asked.
+                  Yes! We offer a 14-day money-back guarantee on all paid plans. If you&apos;re not satisfied, 
+                  we&apos;ll refund your payment in full, no questions asked.
                 </p>
               </CardContent>
             </Card>
@@ -220,7 +220,7 @@ export function PricingPlans() {
               <CardContent>
                 <p className="text-slate-600">
                   You can cancel anytime from your account settings. Your access will continue until the end of 
-                  your billing period, then you'll automatically revert to the Free plan.
+                  your billing period, then you&apos;ll automatically revert to the Free plan.
                 </p>
               </CardContent>
             </Card>
@@ -247,3 +247,5 @@ export function PricingPlans() {
     </div>
   );
 }
+
+
