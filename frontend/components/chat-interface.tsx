@@ -1,14 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ConversationSidebar } from "./conversation-sidebar";
 import { ChatWindow } from "./chat-window";
 import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
+import { getConversations, initializeDemoData } from "@/lib/storage";
 
 export function ChatInterface() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [activeConversationId, setActiveConversationId] = useState<string | null>("1");
+  const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  useEffect(() => {
+    // Initialize demo data if needed
+    initializeDemoData();
+    
+    // Set the first conversation as active
+    const conversations = getConversations();
+    if (conversations.length > 0 && !activeConversationId) {
+      setActiveConversationId(conversations[0].id);
+    }
+  }, []);
+
+  const handleRefresh = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
 
   return (
     <div className="h-screen flex overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
@@ -19,9 +36,11 @@ export function ChatInterface() {
         } transition-all duration-300 ease-in-out overflow-hidden border-r border-slate-200 bg-white shadow-lg`}
       >
         <ConversationSidebar
+          key={refreshKey}
           activeConversationId={activeConversationId}
           onSelectConversation={setActiveConversationId}
           onClose={() => setSidebarOpen(false)}
+          onRefresh={handleRefresh}
         />
       </div>
 
@@ -40,9 +59,12 @@ export function ChatInterface() {
         )}
 
         {/* Chat Window */}
-        <ChatWindow conversationId={activeConversationId} />
+        <ChatWindow
+          key={`${activeConversationId}-${refreshKey}`}
+          conversationId={activeConversationId}
+          onRefresh={handleRefresh}
+        />
       </div>
     </div>
   );
 }
-
